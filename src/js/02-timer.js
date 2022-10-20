@@ -15,35 +15,34 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if(selectedDates[0].getDate() <=  options.defaultDate.getDate() ){
-        Notiflix.Notify.failure('Будь-ласка, обери дату в майбутньому')
-        startButton.setAttribute('disabled', 'disabled');
-    } else{
-        startButton.removeAttribute('disabled');
+    if (selectedDates[0] <= options.defaultDate.getDate()) {
+      Notiflix.Notify.failure('Будь-ласка, обери дату в майбутньому');
+      startButton.setAttribute('disabled', 'disabled');
+    } else {
+      Notiflix.Notify.success('Ваша дата підходить!');
+      startButton.removeAttribute('disabled');
     }
     console.log(selectedDates[0]);
   },
 };
 
+const date = flatpickr(input, options);
 
- const date =  flatpickr(input, options);
+function timer() {
+  const interval = setInterval(() => {
+    const currentTime = Date.now();
+    const deltaTime = date.selectedDates[0] - currentTime;
+    const { days, hours, minutes, seconds } = convertMs(deltaTime);
+    // console.log(`${days}:${hours}:${minutes}:${seconds}`);
+    day.textContent = `${days}`;
+    hour.textContent = `${hours}`;
+    minute.textContent = `${minutes}`;
+    second.textContent = `${seconds}`;
+  }, 1000);
+  setTimeout(() => clearInterval(interval), date.selectedDates[0] - Date.now());
+}
 
-
-function timer ()  {
-      setInterval(() => {
-        const currentTime = Date.now();
-        const deltaTime = date.selectedDates[0] - currentTime;
-        const { days, hours, minutes, seconds } = convertMs(deltaTime);
-        // console.log(`${days}:${hours}:${minutes}:${seconds}`);
-        day.textContent = `${days}`;
-        hour.textContent = `${hours}`;
-        minute.textContent = `${minutes}`;
-        second.textContent =  `${seconds}`;
-      }, 1000);
-    }
- 
-startButton.addEventListener('click', timer)
-
+startButton.addEventListener('click', timer);
 
 function addZero(value) {
   return String(value).padStart(2, '0');
