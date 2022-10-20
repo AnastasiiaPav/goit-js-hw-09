@@ -19,7 +19,6 @@ function sendForm(event) {
   const firstDelay = Number(document.querySelector('[name="delay"]').value);
   const delayStep = Number(document.querySelector('[name="step"]').value);
   const amount = document.querySelector('[name="amount"]');
-  // debugger;
   let step = firstDelay;
   event.preventDefault();
   for (let index = 1; index <= amount.value; index++) {
