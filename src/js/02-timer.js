@@ -15,7 +15,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0] <= options.defaultDate.getDate()) {
+    if (selectedDates[0].getDate() <= options.defaultDate.getDate()) {
       Notiflix.Notify.failure('Будь-ласка, обери дату в майбутньому');
       startButton.setAttribute('disabled', 'disabled');
     } else {
